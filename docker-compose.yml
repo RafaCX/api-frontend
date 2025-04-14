@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  frontend:
+    build: ./api-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - api-produtos
+      - api-pedidos
+
+  api-produtos:
+    build: ./api-produtos
+    ports:
+      - "5001:5001"
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=production
+
+  api-pedidos:
+    build: ./api-pedidos
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=production
+    volumes:
+      - ./api-pedidos/database:/app/database
